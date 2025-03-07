@@ -1,0 +1,49 @@
+
+server:
+  port: # your server port
+
+spring:
+  application:
+    name: # your service name
+  cloud: 
+    config:
+      server:
+        git:
+          uri: # your github repo url
+          searchPaths: ${APP_LOCATE:dev} # change it for your dir name
+          username: # your github username
+          password: # your github pwd
+    consul:
+      discovery:
+        preferIpAddress: true
+        enabled: true
+        register: true
+        service-name: # your service name for consul
+        health-check-interval: 10s
+        health-check-timeout: 20s
+        heartbeat:
+          enabled: true
+        ip-address: localhost
+        port: ${server.port}
+        lifecycle:
+          enabled: true
+        scheme: http
+        prefer-agent-address: false
+        register-health-check: true
+        tags: master
+        query-passing: true
+      retry:
+        initial-interval: 1000
+        max-attempts: 4
+        max-interval: 1000
+    rabbitmq:
+      host: # your rabbitmq host
+      port: # your rabbitmq port
+      username: # your rabbitmq username
+      password: #your rabbitmq pwd
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh
